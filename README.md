@@ -11,28 +11,47 @@
 
 ## Table of Contents
 
-### 1. [Introduction](#introduction)
-### 2. [Initial Environment Configuration](#initial-environment-configuration)
-* [2.1. IP Addressing Scheme](#ip-addressing-scheme)
-* [2.2. Installing Tools](#installing-tools)
-### 3. [Network Configuration](#network-configuration)
-### 4. [SSH Configuration](#ssh-configuration)
-* [4.1. Allow Root Access via SSH](#allow-root-access-via-ssh)
-* [4.2. Verify SSH Configuration](#verify-ssh-configuration)
-### 5. [Cloudstack Installation](#cloudstack-installation)
-* [5.1. Importing CloudStack Repositories Key](#importing-cloudstack-repositories-key)
-* [5.2. Verify Repository Configruation](#verify-repository-configruation)
-* [5.3. Installing CloudStack Management and MySQL Server](#installing-cloudstack-management-and-mysql-server)
-* [5.4. Configure MySQL](#configure-mysql)
-* [5.5. Initialize CloudStack Schema and User](#initialize-cloudstack-schema-and-user)
-* [5.6. Configure Primary and Secondary Storage](#configure-primary-and-secondary-storage)
-### 6. [Configure CloudStack Host with KVM Hypervisor](#configure-cloudstack-host-with-kvm-hypervisor)
-* [6.1. Configure KVM Virtualization Management](#configure-kvm-virtualization-management)
-* [6.2. Generate Unique Host ID](#generate-unique-host-id)
-* [6.3. Configure IPtables Firewall](#configure-iptables-firewall)
-* [6.4. Disable Apparmour on Libvirtd](#disable-apparmour-on-libvirtd)
-### 7. [Launch CloudStack Management Server](#launch-cloudstack-management-server)
-* [7.1. Open CloudStack Dashboard](#open-cloudstack-dashboard)
+- [Introduction](#introduction)
+- [Initial Environment Configuration](#initial-environment-configuration)
+  - [IP Addressing Scheme](#ip-addressing-scheme)
+  - [Installing Tools](#installing-tools)
+- [Network Configuration](#network-configuration)
+- [SSH Configuration](#ssh-configuration)
+  - [Allow Root Access via SSH](#allow-root-access-via-ssh)
+  - [Verify SSH Configuration](#verify-ssh-configuration)
+  - [Set Timezone](#set-timezone)
+- [Cloudstack Installation](#cloudstack-installation)
+  - [Importing CloudStack Repositories Key](#importing-cloudstack-repositories-key)
+  - [Verify Repository Configuration](#verify-repository-configuration)
+  - [Installing CloudStack Management and MySQL Server](#installing-cloudstack-management-and-mysql-server)
+  - [Configure MySQL](#configure-mysql)
+  - [Initialize CloudStack Schema and User](#initialize-cloudstack-schema-and-user)
+  - [Configure Primary and Secondary Storage](#configure-primary-and-secondary-storage)
+- [Configure CloudStack Host with KVM Hypervisor](#configure-cloudstack-host-with-kvm-hypervisor)
+  - [Configure KVM Virtualization Management](#configure-kvm-virtualization-management)
+  - [Generate Unique Host ID](#generate-unique-host-id)
+  - [Configure IPtables Firewall](#configure-iptables-firewall)
+  - [Disable Apparmour on Libvirtd](#disable-apparmour-on-libvirtd)
+- [Launch CloudStack Management Server](#launch-cloudstack-management-server)
+  - [Open CloudStack Dashboard](#open-cloudstack-dashboard)
+- [Add a Zone, Pod, and Cluster](#add-a-zone-pod-and-cluster)
+  - [Zone](#zone)
+  - [Pod](#pod)
+  - [Cluster](#cluster)
+- [Add Primary and Secondary Storage](#add-primary-and-secondary-storage)
+  - [Primary Storage](#primary-storage)
+  - [Secondary Storage](#secondary-storage)
+- [Add Hypervisor Hosts](#add-hypervisor-hosts)
+  - [Supported Hypervisors](#supported-hypervisors)
+  - [Prerequisites](#prerequisites)
+  - [Steps to Add a Host](#steps-to-add-a-host)
+- [Launch a Virtual Machine Instance (Ubuntu 20.04)](#launch-a-virtual-machine-instance-ubuntu-2004)
+  - [Upload Ubuntu 20.04 Template](#upload-ubuntu-2004-template)
+  - [Launch the VM](#launch-the-vm)
+  - [Assign Public IP](#assign-public-ip)
+  - [Enable Internet Access](#enable-internet-access)
+  - [Enable SSH Access](#enable-ssh-access)
+  - [Enable HTTP/HTTPS Access](#enable-httphttps-access)
 
 ---
 
@@ -333,10 +352,7 @@ tail -f /var/log/cloudstack/management/management-server.log #if you want to tro
 http://192.168.68.106:8080
 ```
 
-### You should see the cloudstack dashboard
-
 ![image](https://github.com/user-attachments/assets/25820e74-d131-4246-bf65-ad730e891838)
-
 
 ```
 Login Credentials (Default)
@@ -345,7 +361,7 @@ Login Credentials (Default)
 *Recommended to change the default password for security
 ```
 
-### Add a Zone, Pod, and Cluster
+## Add a Zone, Pod, and Cluster
 
 Once logged in to the CloudStack Dashboard:
 
@@ -356,59 +372,58 @@ Once logged in to the CloudStack Dashboard:
 ---
 > **Note**: Make sure to complete it step by step from Zone, Pod, to Cluster. Make sure each setup is configured correctly. Recommended to plan out the setup such as IPs, subnets, VLANs, before go through these steps.
 
-#### Zone
+### Zone
 
-- A **Zone** represents a single physical data center.
-- It includes:
-  - One or more **Pods**
-  - Shared **Secondary Storage** (for templates, ISOs, and snapshots)
-- Add details:
-  - Zone name (e.g. KELOMPOK2_ZONE)
-  - Public and guest IP address ranges, with subnets
-  - DNS servers (internal and external)
-  - Network type (Basic or Advanced)
+A **Zone** represents a single physical data center. It includes:
+- One or more **Pods**
+- Shared **Secondary Storage** (for templates, ISOs, and snapshots)
+
+Add details:
+- Zone name (e.g. KELOMPOK2_ZONE)
+- Public and guest IP address ranges, with subnets
+- DNS servers (internal and external)
+- Network type (Basic or Advanced)
 
 ![image](https://github.com/user-attachments/assets/4bc549c8-c94c-4177-a571-f90819c2eafe)
 ![image](https://github.com/user-attachments/assets/42b89800-5edc-40a4-b843-c1dc01092fe3)
 
 ---
 
-#### Pod
+### Pod
 
-- A **Pod** resides within a zone and typically represents a single rack or switch.
-- Each Pod includes:
-  - One or more **Clusters**
-  - Its own subnet (Layer 2 broadcast domain)
-  - Access to **Primary Storage**
-- Add details:
-  - Pod name
-  - IP address range
-  - Netmask
-  - Gateway
+A **Pod** resides within a zone and typically represents a single rack or switch. Each Pod includes:
+- One or more **Clusters**
+- Its own subnet (Layer 2 broadcast domain)
+- Access to **Primary Storage**
+
+Add details:
+- Pod name
+- IP address range
+- Netmask
+- Gateway
 
 ![image](https://github.com/user-attachments/assets/f2a88f84-62cb-4a7a-893d-3ea98bae7655)
 ![image](https://github.com/user-attachments/assets/1e98fb3f-bea1-4990-b1a1-52831b7ec083)
 
 ---
 
-#### Cluster
+### Cluster
 
-- A **Cluster** is a group of hosts (physical servers) that use the same hypervisor (e.g., KVM, XenServer, or VMware).
-- Clusters are where your virtual machines (VMs) will be deployed.
-- Each cluster shares:
-  - **Primary Storage**
-  - Network configurations
-- Add details:
-  - Cluster name (e.g. KELOMPOK2_CLUSTER)
-  - Hypervisor type (e.g., KVM, XenServer, or VMware)
-  - Add physical hosts (including credentials and IPs)
+A **Cluster** is a group of hosts (physical servers) that use the same hypervisor (e.g., KVM, XenServer, or VMware), where your virtual machines (VMs) will be deployed. Each cluster shares:
+- Primary Storage
+- Network configurations
+
+Add details:
+- Cluster name (e.g. KELOMPOK2_CLUSTER)
+- Hypervisor type (e.g., KVM, XenServer, or VMware)
+- Add physical hosts (including credentials and IPs)
 
 ![image](https://github.com/user-attachments/assets/c53f6aa1-a4b6-4587-8b95-32ee0d01c44e)
 ![image](https://github.com/user-attachments/assets/15a7c726-2440-4145-9e41-9222a6cc2c94)
 
+---
 
 ### Add Primary and Secondary Storage
----
 
 #### Primary Storage
 
@@ -445,21 +460,17 @@ Once logged in to the CloudStack Dashboard:
 
 ---
 
-### Add Hypervisor Hosts
+## Add Hypervisor Hosts
 
 Hypervisors (physical servers) are where your virtual machines will run. Hosts must be added to the **Cluster** that already configured previously and running.
 
----
-
-#### Supported Hypervisors
+### Supported Hypervisors
 
 - KVM (Linux)
 - XenServer / XCP-ng
 - VMware vSphere/ESXi
 
----
-
-#### Prerequisites
+### Prerequisites
 
 - Hypervisors must be installed and properly networked
 - Ensure they can communicate with:
@@ -467,9 +478,7 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
   - Storage servers
 - SSH access and appropriate credentials must be available
 
----
-
-#### Steps to Add a Host
+### Add a Host
 
 1. Navigate to `Infrastructure` > `Clusters` > `View Hosts` > `Add Host`
 2. Select:
@@ -481,13 +490,10 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
 4. Wait for CloudStack to verify the host and connect it to the cluster
 
 ---
-# Launch a Virtual Machine Instance (Ubuntu 20.04)
 
-This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, and enable internet, SSH, and HTTP/HTTPS access.
+## Launch a Virtual Machine Instance (Ubuntu 20.04)
 
----
-
-## Upload Ubuntu 20.04 Template
+### Upload Ubuntu 20.04 Template
 
 1. Navigate to `Templates` > `Register Template`
 2. Use the following settings:
@@ -503,9 +509,7 @@ This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, an
    - **Public**: ✅
 3. Click **OK** and wait until the status shows `Ready`
 
----
-
-## Launch the VM
+### Launch the VM
 
 1. Go to `Instances` > `Add Instance`
 2. Follow the wizard:
@@ -522,18 +526,14 @@ This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, an
 - **Guest Network**: `KELOMPOK2-NETWORK`
 - **Public IP**: (assigned in next step)
 
----
-
-## Assign Public IP
+### Assign Public IP
 
 1. Go to `Network` > `KELOMPOK2-NETWORK`
 2. Under **Public IP Addresses**, click `Acquire New IP`
 3. Example public IP: `192.168.68.126`
 4. Click the IP, then choose `Enable Static NAT` 
 
----
-
-## Enable Internet Access
+### Enable Internet Access
 
 1. Go to `Network` > `KELOMPOK2-NETWORK` > `Egress Rules`
 2. Add the following rule:
@@ -566,8 +566,10 @@ ping 8.8.8.8
    ```bash
    ssh ubuntu@192.168.68.126
     ```
+   
 ## Enable HTTP/HTTPS Access
-## 1. SSH into the VM
+
+1. SSH into the VM
 Make sure you have SSH into the VM first. (Refer to the previous SSH step.)
 
 ## 2. Install Apache
