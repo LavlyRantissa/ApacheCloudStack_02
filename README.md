@@ -552,7 +552,7 @@ ping 8.8.8.8
 
 ## Enable SSH Access
 
-1. **Go to the Firewall tab** under IP `192.168.68.126` (in `Network Section` under `Public IP addresses`).
+1. **Go to the Firewall tab** under IP `192.168.68.126` (in `Network` section under `Public IP addresses`).
 2. **Add a Port Forwarding Rule**:
    - **Protocol**: TCP  
    - **Public Port**: 22  
