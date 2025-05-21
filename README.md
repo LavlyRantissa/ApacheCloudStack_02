@@ -555,6 +555,9 @@ Update package list dan install Apache:
 ```bash
 sudo apt update
 sudo apt install apache2 -y
+sudo systemctl enable apache2
+sudo systemctl start apache2
+sudo systemctl status apache2
 ```
 ### 3. Add Firewall Rules for the Public IP
 
