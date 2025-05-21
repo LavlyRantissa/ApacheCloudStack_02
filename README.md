@@ -549,6 +549,7 @@ ping 8.8.8.8
 ![image](https://github.com/user-attachments/assets/52b7e433-8837-4cd7-9210-437dff03abc8)
 ![image](https://github.com/user-attachments/assets/ff2a6cd7-3c00-48c8-bf18-3b7eae362089)
 
+---
 
 ## Enable SSH Access
 
@@ -566,7 +567,9 @@ ping 8.8.8.8
    ```bash
    ssh ubuntu@192.168.68.126
     ```
-   
+
+---
+
 ## Enable HTTP/HTTPS Access
 
 1. SSH into the VM
@@ -599,6 +602,8 @@ sudo systemctl status apache2
 ```
 http://192.168.68.126
 ```
+
+---
 
 ### References:
 #### [1] L. Reynolds, “Ubuntu Server: Connect to Wi-Fi from command line,” LinuxConfig, Apr. 06, 2020. Available: https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line (accessed May 02, 2025).
