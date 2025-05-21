@@ -51,7 +51,7 @@ This single-node deployment includes the CloudStack Management Server, KVM compu
 
 ```
 Network Address : 192.168.68.0/24
-Management  IP address (Host) : 192.168.68.106/24
+Management IP address (Host) : 192.168.68.106/24
 Gateway : 192.168.68.1
 System IP : 192.168.68.120
 Public IP : 192.168.68.120 - 192.168.68.140
