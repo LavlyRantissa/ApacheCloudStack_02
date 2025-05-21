@@ -443,8 +443,6 @@ Add details:
 ![image](https://github.com/user-attachments/assets/c0a40966-b623-4a6b-9daf-d8dc5ad6a488)
 ![image](https://github.com/user-attachments/assets/8f2995df-5315-4cb2-8590-82a03484e3de)
 
----
-
 ### Secondary Storage
 
 - To Stores templates, ISO images, and system VM snapshots.
