@@ -368,6 +368,9 @@ Once logged in to the CloudStack Dashboard:
   - DNS servers (internal and external)
   - Network type (Basic or Advanced)
 
+![image](https://github.com/user-attachments/assets/4bc549c8-c94c-4177-a571-f90819c2eafe)
+![image](https://github.com/user-attachments/assets/42b89800-5edc-40a4-b843-c1dc01092fe3)
+
 ---
 
 #### Pod
@@ -383,6 +386,9 @@ Once logged in to the CloudStack Dashboard:
   - Netmask
   - Gateway
 
+![image](https://github.com/user-attachments/assets/f2a88f84-62cb-4a7a-893d-3ea98bae7655)
+![image](https://github.com/user-attachments/assets/1e98fb3f-bea1-4990-b1a1-52831b7ec083)
+
 ---
 
 #### Cluster
@@ -396,6 +402,9 @@ Once logged in to the CloudStack Dashboard:
   - Cluster name (e.g. KELOMPOK2_CLUSTER)
   - Hypervisor type (e.g., KVM, XenServer, or VMware)
   - Add physical hosts (including credentials and IPs)
+
+![image](https://github.com/user-attachments/assets/c53f6aa1-a4b6-4587-8b95-32ee0d01c44e)
+![image](https://github.com/user-attachments/assets/15a7c726-2440-4145-9e41-9222a6cc2c94)
 
 
 ### Add Primary and Secondary Storage
@@ -416,6 +425,9 @@ Once logged in to the CloudStack Dashboard:
   4. Choose the protocol (NFS, iSCSI, etc.)
   5. Save and wait for CloudStack to mount and verify the storage
 
+![image](https://github.com/user-attachments/assets/c0a40966-b623-4a6b-9daf-d8dc5ad6a488)
+![image](https://github.com/user-attachments/assets/8f2995df-5315-4cb2-8590-82a03484e3de)
+
 ---
 
 #### Secondary Storage
@@ -427,6 +439,9 @@ Once logged in to the CloudStack Dashboard:
   2. Enter the NFS path or object store details (e.g., `nfs://192.168.1.100/export/SECONDARY`)
   3. Assign to the desired zone
   4. Save and verify connectivity
+
+![image](https://github.com/user-attachments/assets/e6123cd7-af1c-402b-8745-d92fa3af46d7)
+![image](https://github.com/user-attachments/assets/f596858d-1f32-4aa8-b06e-2e0aa3f96f5a)
 
 ---
 
@@ -522,7 +537,6 @@ This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, an
 
 1. Go to `Network` > `KELOMPOK2-NETWORK` > `Egress Rules`
 2. Add the following rule:
-
    - **Protocol**: All  
    - **CIDR**: `0.0.0.0/0`  
    - **Action**: Allow  
@@ -530,7 +544,12 @@ This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, an
 ```bash
 ping 8.8.8.8
 ```
----
+3. Optionally, you can try step 4. if internet access still doesn't work on running instances.
+4. Go to `Service offerings` > `Network Offerings`, then try to assign the following network offerings into your created zones.
+![image](https://github.com/user-attachments/assets/52b7e433-8837-4cd7-9210-437dff03abc8)
+![image](https://github.com/user-attachments/assets/ff2a6cd7-3c00-48c8-bf18-3b7eae362089)
+
+
 ## Enable SSH Access
 
 1. **Go to the Firewall tab** under IP `192.168.68.126`.
