@@ -312,8 +312,9 @@ Once logged in to the CloudStack Dashboard:
 1. Go to `Infrastructure` > `Zones` > `Add Zone`
 2. Choose `Advanced` or `Basic Networking`, depends on network setup
 3. Follow the guided wizard to complete the setup:
-_Note: Make sure to complete it step by step from Zone, Pod, to Cluster. Make sure each setup is configured correctly. Recommended to plan out the setup such as IPs, subnets, VLANs, before go through these steps. _
+
 ---
+_Note: Make sure to complete it step by step from Zone, Pod, to Cluster. Make sure each setup is configured correctly. Recommended to plan out the setup such as IPs, subnets, VLANs, before go through these steps. _
 
 #### Zone
 
