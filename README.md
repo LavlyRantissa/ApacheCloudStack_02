@@ -296,3 +296,9 @@ http://192.168.68.106:8080
 ### You should see the cloudstack dashboard
 
 ![image](https://github.com/user-attachments/assets/1fc841f5-dcb3-4e2a-b8b0-1881cf7372fc)
+---
+Login Credentials (Default)
+Username: admin
+Password: password
+*Recommended to change the default password for security
+---
