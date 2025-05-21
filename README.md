@@ -357,3 +357,72 @@ _Note: Make sure to complete it step by step from Zone, Pod, to Cluster. Make su
   - Hypervisor type (e.g., KVM, XenServer, or VMware)
   - Add physical hosts (including credentials and IPs)
 
+
+### Add Primary and Secondary Storage
+---
+
+#### Primary Storage
+
+- To stores VM root volumes, data disks, and snapshots.
+- Configured per **Cluster**.
+- **Types**:
+  - NFS (Network File System)
+  - iSCSI
+  - Shared local storage
+- **Steps**:
+  1. Go to `Infrastructure` > `Primary Storage` > `Add Primary Storage`
+  2. Select the **zone**, **pod**, and **cluster** that configured previously
+  3. Enter a name and the storage path (e.g., `nfs://192.168.1.100/export/PRIMARY`)
+  4. Choose the protocol (NFS, iSCSI, etc.)
+  5. Save and wait for CloudStack to mount and verify the storage
+
+---
+
+#### Secondary Storage
+
+- To Stores templates, ISO images, and system VM snapshots.
+- Configured per **Zone**.
+- **Steps**:
+  1. Go to `Infrastructure` > `Secondary Storage` > `Add Secondary Storage`
+  2. Enter the NFS path or object store details (e.g., `nfs://192.168.1.100/export/SECONDARY`)
+  3. Assign to the desired zone
+  4. Save and verify connectivity
+
+---
+
+### Add Hypervisor Hosts
+
+Hypervisors (physical servers) are where your virtual machines will run. Hosts must be added to the **Cluster** that already configured previously and running.
+
+---
+
+#### Supported Hypervisors
+
+- KVM (Linux)
+- XenServer / XCP-ng
+- VMware vSphere/ESXi
+
+---
+
+#### Prerequisites
+
+- Hypervisors must be installed and properly networked
+- Ensure they can communicate with:
+  - Management server
+  - Storage servers
+- SSH access and appropriate credentials must be available
+
+---
+
+#### Steps to Add a Host
+
+1. Navigate to `Infrastructure` > `Clusters` > `View Hosts` > `Add Host`
+2. Select:
+   - **Hypervisor Type** (e.g., KVM)
+   - **Host IP Address**
+   - **Username** and **Password** (usually root credentials)
+   - **Cluster** and **Pod**
+3. Click **OK**
+4. Wait for CloudStack to verify the host and connect it to the cluster
+
+---
