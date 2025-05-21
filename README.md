@@ -150,7 +150,7 @@ echo deb [signed-by=/etc/apt/keyrings/cloudstack.gpg] http://packages.shapeblue.
 
 > ShapeBlue provides upstream builds of Apache CloudStack. Adding their repository enables installation of the latest stable versions aligned with the official release.
 
-### Verify repository configruation
+### Verify Repository Configuration
 
 ```
 nano /etc/apt/sources.list.d/cloudstack.list
@@ -165,7 +165,7 @@ apt-get install cloudstack-management mysql-server
 
 > The CloudStack management server acts as the brain of the cloud, handling API requests, scheduling VM placement, and interacting with the database backend. MySQL is used to store all metadata, configurations, and runtime state.
 
-### Configure mysql
+### Configure MySQL
 
 Edit MySQL Configuration File:
 ```
