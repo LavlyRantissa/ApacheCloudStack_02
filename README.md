@@ -527,3 +527,44 @@ This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, an
    - **Protocol**: All  
    - **CIDR**: `0.0.0.0/0`  
    - **Action**: Allow  
+**Verify from inside the VM:**
+```bash
+ping 8.8.8.8
+```
+---
+# Enable SSH Access
+
+1. **Go to the Firewall tab** under IP `192.168.68.126`.
+2. **Add a Port Forwarding Rule**:
+   - **Protocol**: TCP  
+   - **Public Port**: 22  
+   - **Private Port**: 22  
+   - **VM**: `ubuntu-web01` (`10.1.1.226`)
+
+3. **SSH into the VM**:
+   ```bash
+   ssh -i yourkey.pem ubuntu@192.168.68.126
+    ```
+   # Enable HTTP/HTTPS Access
+## 1. SSH into the VM
+Make sure you have SSH into the VM first. (Refer to the previous SSH step.)
+
+## 2. Install Apache
+
+Update package list dan install Apache:
+
+```bash
+sudo apt update
+sudo apt install apache2 -y
+```
+### 3. Add Firewall Rules for the Public IP
+
+#### HTTP (Port 80)
+- **Protocol:** TCP  
+- **Public Port:** 80  
+- **Private Port:** 80  
+
+#### HTTPS (Port 443)
+- **Protocol:** TCP  
+- **Public Port:** 443  
+- **Private Port:** 443  
