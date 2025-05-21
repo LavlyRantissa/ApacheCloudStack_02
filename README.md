@@ -543,7 +543,7 @@ ping 8.8.8.8
 
 3. **SSH into the VM**:
    ```bash
-   ssh -i yourkey.pem ubuntu@192.168.68.126
+   ssh ubuntu@192.168.68.126
     ```
 ## Enable HTTP/HTTPS Access
 ## 1. SSH into the VM
