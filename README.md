@@ -466,3 +466,64 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
 4. Wait for CloudStack to verify the host and connect it to the cluster
 
 ---
+# Launch a Virtual Machine Instance (Ubuntu 20.04)
+
+This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, and enable internet, SSH, and HTTP/HTTPS access.
+
+---
+
+## Upload Ubuntu 20.04 Template
+
+1. Navigate to `Templates` > `Register Template`
+2. Use the following settings:
+   - **Name**: `Ubuntu-20.04`
+   - **URL**:  
+     ```
+     https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+     ```
+   - **OS Type**: Ubuntu (64-bit)
+   - **Hypervisor**: KVM
+   - **Format**: QCOW2
+   - **Zone**: `KELOMPOK2-ZONE`
+   - **Public**: ✅
+3. Click **OK** and wait until the status shows `Ready`
+
+---
+
+## Launch the VM
+
+1. Go to `Instances` > `Add Instance`
+2. Follow the wizard:
+   - **Zone**: `KELOMPOK2-ZONE`
+   - **Template**: `Ubuntu-20.04`
+   - **Compute Offering**: Medium Instance (1 vCPU, 1GB RAM)
+   - **Disk Offering**: Use default
+   - **Network**: `KELOMPOK2-NETWORK` (Isolated with Source NAT)
+   - **Name**: e.g., `ubuntu-web01`
+3. Click **Launch VM**
+
+**Example:**
+- **Private IP**: `10.1.1.226`
+- **Guest Network**: `KELOMPOK2-NETWORK`
+- **Public IP**: (assigned in next step)
+
+---
+
+## Assign Public IP
+
+1. Go to `Network` > `KELOMPOK2-NETWORK`
+2. Under **Public IP Addresses**, click `Acquire New IP`
+3. Example public IP: `192.168.68.126`
+4. Click the IP, then choose `Enable Static NAT` or add a **Port Forwarding Rule**:
+   - Map public ports to internal ports on `10.1.1.226`
+
+---
+
+## Enable Internet Access
+
+1. Go to `Network` > `KELOMPOK2-NETWORK` > `Egress Rules`
+2. Add the following rule:
+
+   - **Protocol**: All  
+   - **CIDR**: `0.0.0.0/0`  
+   - **Action**: Allow  
