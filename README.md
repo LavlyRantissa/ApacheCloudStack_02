@@ -248,7 +248,7 @@ systemctl mask libvirtd.socket libvirtd-ro.socket libvirtd-admin.socket libvirtd
 systemctl restart libvirtd
 ```
 
-Adjust kernel settings
+Configuration to Support Docker Services:
 ```
 echo "net.bridge.bridge-nf-call-arptables = 0" >> /etc/sysctl.conf
 echo "net.bridge.bridge-nf-call-iptables = 0" >> /etc/sysctl.conf
@@ -318,27 +318,6 @@ apparmor_parser -R /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper
 ```
 
 > AppArmor is a mandatory access control system which may block libvirt and KVM from functioning correctly in dynamic cloud environments. Disabling it for relevant services avoids potential runtime errors.
-
-### Importing cloudstack repositories key
-
-```
-sudo -i
-mkdir -p /etc/apt/keyrings
-wget -O- http://packages.shapeblue.com/release.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/cloudstack.gpg > /dev/null
-echo deb [signed-by=/etc/apt/keyrings/cloudstack.gpg] http://packages.shapeblue.com/cloudstack/upstream/debian/4.20 / > /etc/apt/sources.list.d/cloudstack.list
-```
-
-### Configuration to Support Docker Services
-```
-#on certain hosts where you may be running docker and other services, 
-#you may need to add the following in /etc/sysctl.conf
-#and then run sysctl -p: --> /etc/sysctl.conf
-
-echo "net.bridge.bridge-nf-call-arptables = 0" >> /etc/sysctl.conf
-echo "net.bridge.bridge-nf-call-iptables = 0" >> /etc/sysctl.conf
-sysctl -p
-```
-
 
 ### Launch Cloudstack Management Server
 
