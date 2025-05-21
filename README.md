@@ -295,7 +295,7 @@ http://192.168.68.106:8080
 
 ### You should see the cloudstack dashboard
 
-![image](https://github.com/user-attachments/assets/1fc841f5-dcb3-4e2a-b8b0-1881cf7372fc)
+![image](https://github.com/user-attachments/assets/25820e74-d131-4246-bf65-ad730e891838)
 
 
 ```
