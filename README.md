@@ -4,7 +4,7 @@
 
 * Fayza Nirwasita (2106635700)
 * Adrien Ardra Ramadhan (2106731485)
-* Sahrif Fatih Asad Masyhur (2206063014)
+* Sharif Fatih Asad Masyhur (2206063014)
 * Lavly Rantissa Zunnuraina Rusdi (2206830624)
 
 ---
@@ -51,11 +51,10 @@ This single-node deployment includes the CloudStack Management Server, KVM compu
 
 ```
 Network Address : 192.168.68.0/24
-Host IP address : 192.168.68.106/24
+Management  IP address (Host) : 192.168.68.106/24
 Gateway : 192.168.68.1
-Management IP :
-System IP :
-Public IP :
+System IP : 192.168.68.120
+Public IP : 192.168.68.120 - 192.168.68.140
 ```
 > **Note**: The IP address structure here aligns with CloudStack's requirement for having separate network ranges or IP pools for management traffic, system VMs, and public access. Although we use a simplified setup, in a production-grade environment, network isolation using VLANs or SDN controllers is recommended.
 
