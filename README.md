@@ -479,7 +479,7 @@ This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, an
    - **Name**: `Ubuntu-20.04`
    - **URL**:  
      ```
-     https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+     https://releases.ubuntu.com/focal/ubuntu-20.04.6-live-server-amd64.iso
      ```
    - **OS Type**: Ubuntu (64-bit)
    - **Hypervisor**: KVM
@@ -532,7 +532,7 @@ This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, an
 ping 8.8.8.8
 ```
 ---
-# Enable SSH Access
+## Enable SSH Access
 
 1. **Go to the Firewall tab** under IP `192.168.68.126`.
 2. **Add a Port Forwarding Rule**:
@@ -545,7 +545,7 @@ ping 8.8.8.8
    ```bash
    ssh -i yourkey.pem ubuntu@192.168.68.126
     ```
-   # Enable HTTP/HTTPS Access
+## Enable HTTP/HTTPS Access
 ## 1. SSH into the VM
 Make sure you have SSH into the VM first. (Refer to the previous SSH step.)
 
