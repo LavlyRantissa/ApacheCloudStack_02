@@ -597,3 +597,13 @@ sudo systemctl status apache2
 ```
 http://192.168.68.126
 ```
+
+Source of References:
+[1] L. Reynolds, “Ubuntu Server: Connect to Wi-Fi from command line,” LinuxConfig, Apr. 06, 2020. Available: https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line (accessed May 02, 2025).
+[2] BCruz, szovatilevente, “ACPI error after installing Ubuntu 22.04,” Linux.org, Jun. 27, 2022. Available: https://www.linux.org/threads/acpi-error-after-installing-ubuntu-22-04.40993/?__cf_chl_tk=B0f_GmnIzHN8XBzOtLSWePXf3j1vksVK.ekiMOCARt8-1746608196-1.0.1.1-R84f2whyGFqS.2J3VdjeMS1VA8F8jbK_dCJKJzYkS1I (accessed May 02, 2025).
+[3] AhmadRifqi86, “cloudstack-install-and-configure/cloudstack-install at main · AhmadRifqi86/cloudstack-install-and-configure,” GitHub, 2024. Available: https://github.com/AhmadRifqi86/cloudstack-install-and-configure/tree/main/cloudstack-install (accessed May 03, 2025).
+‌[4] maradens, “apachecloudstack/README.md at main · maradens/apachecloudstack,” GitHub, 2023. Available: https://github.com/maradens/apachecloudstack/blob/main/README.md (accessed May 03, 2025).
+‌[5] Yan Maraden, “Continue with installation (Apache Cloudstack 4.18) - Shorter Version,” YouTube, Apr. 30, 2024. Available: https://www.youtube.com/watch?v=8ZZeU3vbbl4 (accessed May 10, 2025).
+‌[6] Yan Maraden, “Register ISO and Add Instance (Apache Cloustack 4.18),” YouTube, Apr. 29, 2024. Available: https://www.youtube.com/watch?v=y_S3x3tJvCg (accessed May 10, 2025).
+[7] ShapeBlue, “Public IP Address | How To CloudStack,” YouTube, May 24, 2021. Available: https://www.youtube.com/watch?v=oBJjqYg1Mpk (accessed May 13, 2025).
+[8] ShapeBlue, “Apache CloudStack Installation and Configuration Guide,” YouTube, Apr. 15, 2024. Available: https://www.youtube.com/watch?v=DlJg3LYvIIs (accessed May 13, 2025).
