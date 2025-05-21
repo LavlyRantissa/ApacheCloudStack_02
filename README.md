@@ -514,8 +514,7 @@ This guide explains how to launch a VM with Ubuntu 20.04, assign a public IP, an
 1. Go to `Network` > `KELOMPOK2-NETWORK`
 2. Under **Public IP Addresses**, click `Acquire New IP`
 3. Example public IP: `192.168.68.126`
-4. Click the IP, then choose `Enable Static NAT` or add a **Port Forwarding Rule**:
-   - Map public ports to internal ports on `10.1.1.226`
+4. Click the IP, then choose `Enable Static NAT` 
 
 ---
 
@@ -567,4 +566,9 @@ sudo apt install apache2 -y
 #### HTTPS (Port 443)
 - **Protocol:** TCP  
 - **Public Port:** 443  
-- **Private Port:** 443  
+- **Private Port:** 443
+### Open in browser
+
+```
+http://192.168.68.126
+```
