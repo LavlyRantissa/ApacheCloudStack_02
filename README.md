@@ -13,11 +13,26 @@
 
 ### 1. [Introduction](#introduction)
 ### 2. [Initial Environment Configuration](#initial-environment-configuration)
+* [2.1. IP Addressing Scheme](#ip-addressing-scheme)
+* [2.2. Installing Tools](#installing-tools)
 ### 3. [Network Configuration](#network-configuration)
 ### 4. [SSH Configuration](#ssh-configuration)
+* [4.1. Allow Root Access via SSH](#allow-root-access-via-ssh)
+* [4.2. Verify SSH Configuration](#verify-ssh-configuration)
 ### 5. [Cloudstack Installation](#cloudstack-installation)
+* [5.1. Importing CloudStack Repositories Key](#importing-cloudstack-repositories-key)
+* [5.2. Verify Repository Configruation](#verify-repository-configruation)
+* [5.3. Installing CloudStack Management and MySQL Server](#installing-cloudstack-management-and-mysql-server)
+* [5.4. Configure MySQL](#configure-mysql)
+* [5.5. Initialize CloudStack Schema and User](#initialize-cloudstack-schema-and-user)
+* [5.6. Configure Primary and Secondary Storage](#configure-primary-and-secondary-storage)
 ### 6. [Configure CloudStack Host with KVM Hypervisor](#configure-cloudstack-host-with-kvm-hypervisor)
+* [6.1. Configure KVM Virtualization Management](#configure-kvm-virtualization-management)
+* [6.2. Generate Unique Host ID](#generate-unique-host-id)
+* [6.3. Configure IPtables Firewall](#configure-iptables-firewall)
+* [6.4. Disable Apparmour on Libvirtd](#disable-apparmour-on-libvirtd)
 ### 7. [Launch CloudStack Management Server](#launch-cloudstack-management-server)
+* [7.1. Open CloudStack Dashboard](#open-cloudstack-dashboard)
 
 ---
 
@@ -42,6 +57,7 @@ Management IP :
 System IP :
 Public IP :
 ```
+> **Note**: The IP address structure here aligns with CloudStack's requirement for having separate network ranges or IP pools for management traffic, system VMs, and public access. Although we use a simplified setup, in a production-grade environment, network isolation using VLANs or SDN controllers is recommended.
 
 ### Installing Tools
 
@@ -50,6 +66,8 @@ apt update -y
 apt upgrade -y
 apt install htop lynx duf bridge-utils -y
 ```
+
+> These tools help monitor system utilization during and after deployment. `htop` displays real-time CPU/memory load, `lynx` is a CLI browser useful for checking service availability without GUI, and `duf` provides an overview of disk usage.
 
 ## Network Configuration
 
@@ -93,6 +111,8 @@ netplan generate
 netplan apply
 ```
 
+> CloudStack uses bridge networking to connect VMs directly to the external physical network. This allows seamless Layer 2 connectivity and eliminates the need for NAT translation on the hypervisor.
+
 ## SSH Configuration
 
 ### Allow Root Access via SSH
@@ -110,6 +130,8 @@ systemctl restart sshd.service
 nano /etc/ssh/sshd_config
 ```
 
+> Enabling SSH access for root allows remote administration of the host, especially useful when physical access is unavailable. However, in production, it is highly recommended to disable root login or use key-based authentication with unprivileged users.
+
 ### Set Timezone
 ```
 timedatectl set-timezone Asia/Jakarta
@@ -126,6 +148,8 @@ wget -O- http://packages.shapeblue.com/release.asc | gpg --dearmor | sudo tee /e
 echo deb [signed-by=/etc/apt/keyrings/cloudstack.gpg] http://packages.shapeblue.com/cloudstack/upstream/debian/4.18 / > /etc/apt/sources.list.d/cloudstack.list
 ```
 
+> ShapeBlue provides upstream builds of Apache CloudStack. Adding their repository enables installation of the latest stable versions aligned with the official release.
+
 ### Verify repository configruation
 
 ```
@@ -138,6 +162,8 @@ nano /etc/apt/sources.list.d/cloudstack.list
 apt-get update -y
 apt-get install cloudstack-management mysql-server
 ```
+
+> The CloudStack management server acts as the brain of the cloud, handling API requests, scheduling VM placement, and interacting with the database backend. MySQL is used to store all metadata, configurations, and runtime state.
 
 ### Configure mysql
 
@@ -167,6 +193,8 @@ systemctl status mysql
 cloudstack-setup-databases cloud:cloud@localhost --deploy-as=root:Pa$$w0rd -i 192.168.104.24
 ```
 
+> This command initializes the CloudStack schema, creates required tables, and provisions a privileged database user that will be used by the management server.
+
 ### Configure Primary and Secondary Storage
 
 ```
@@ -176,6 +204,8 @@ mkdir -p /export/primary /export/secondary
 exportfs -a
 ```
 
+> CloudStack distinguishes between primary storage (used by VMs for root and data volumes) and secondary storage (used for templates, ISO images, and VM snapshots). We use NFS because it is simple to set up and supported out-of-the-box.
+
 ```
 sed -i -e 's/^RPCMOUNTDOPTS="--manage-gids"$/RPCMOUNTDOPTS="-p 892 --manage-gids"/g' /etc/default/nfs-kernel-server
 sed -i -e 's/^STATDOPTS=$/STATDOPTS="--port 662 --outgoing-port 2020"/g' /etc/default/nfs-common
@@ -184,13 +214,21 @@ sed -i -e 's/^RPCRQUOTADOPTS=$/RPCRQUOTADOPTS="-p 875"/g' /etc/default/quota
 service nfs-kernel-server restart
 ```
 
+> Port pinning here ensures compatibility with firewalls and consistent behavior across system reboots.
+
+---
+
 ## Configure Cloudstack Host with KVM Hypervisor
+
+KVM (Kernel-based Virtual Machine) is a native Linux hypervisor. Libvirt is the management layer, and `cloudstack-agent` serves as the communication bridge between CloudStack and libvirt.
 
 ```bash
 apt install qemu-kvm cloudstack-agent -y
 ```
 
 ### Configure KVM Virtualization Management
+
+By default, libvirt listens only on UNIX sockets for local clients. We reconfigure it to listen over TCP so that CloudStack's management server can communicate with KVM remotely, even though in our case they reside on the same machine.
 
 ```
 sed -i.bak 's/^\(LIBVIRTD_ARGS=\).*/\1"--listen"/' /etc/default/libvirtd
@@ -204,16 +242,20 @@ echo 'mdns_adv = 0' >> /etc/libvirt/libvirtd.conf
 echo 'auth_tcp = "none"' >> /etc/libvirt/libvirtd.conf
 ```
 
+Restart Libvirt:
 ```
 systemctl mask libvirtd.socket libvirtd-ro.socket libvirtd-admin.socket libvirtd-tls.socket libvirtd-tcp.socket
 systemctl restart libvirtd
 ```
 
+Adjust kernel settings
 ```
 echo "net.bridge.bridge-nf-call-arptables = 0" >> /etc/sysctl.conf
 echo "net.bridge.bridge-nf-call-iptables = 0" >> /etc/sysctl.conf
 sysctl -p
 ```
+
+> These sysctl flags prevent the Linux bridge from filtering packets with iptables, which can otherwise interfere with VM communication or container networking.
 
 ### Generate Unique Host ID
 
@@ -223,6 +265,8 @@ UUID=$(uuid)
 echo host_uuid = \"$UUID\" >> /etc/libvirt/libvirtd.conf
 systemctl restart libvirtd
 ```
+
+> `host_uuid` uniquely identifies each host to the CloudStack management system. This is required for accurate tracking and VM placement.
 
 ### Configure IPtables Firewall
 
@@ -244,6 +288,23 @@ iptables -A INPUT -s $NETWORK -m state --state NEW -p tcp --dport 9090 -j ACCEPT
 iptables -A INPUT -s $NETWORK -m state --state NEW -p tcp --dport 16514 -j ACCEPT
 #iptables -A INPUT -s $NETWORK -m state --state NEW -p udp --dport 3128 -j ACCEPT
 #iptables -A INPUT -s $NETWORK -m state --state NEW -p tcp --dport 3128 -j ACCEPT
+```
+
+> CloudStack and its underlying infrastructure components require multiple open ports for communication between services like libvirt, NFS, and the management server. Below is a breakdown of each rule:
+>
+> * **TCP/UDP 111**: Used by the portmapper (`rpcbind`) service to coordinate RPC-based services such as NFS.
+> * **TCP 2049**: NFS service port where clients read/write to exported directories.
+> * **TCP 32803 & UDP 32769**: Associated with the `nfsd` and mountd daemons for mounting and file handle access.
+> * **TCP 892, 875, 662**: These are fixed ports for `rpc.mountd`, `rpc.rquotad`, and `rpc.statd` respectively to support quota and locking over NFS.
+> * **TCP 8250**: Typically used by CloudStack agent services for internal communication.
+> * **TCP 8080**: CloudStack Management Server UI and API.
+> * **TCP 8443 & 9090**: Used for secured API access and internal monitoring.
+> * **TCP 16514**: Libvirt remote management port used by CloudStack to control VM lifecycle operations on KVM hosts.
+>   CloudStack uses a wide range of ports for NFS, libvirt, web UI, and various internal services. Explicitly allowing these ports ensures no communication is blocked, especially in production with a strict firewall policy.
+
+
+Make the rules persistent:
+```
 apt-get install iptables-persistent
 ```
 
@@ -256,6 +317,8 @@ apparmor_parser -R /etc/apparmor.d/usr.sbin.libvirtd
 apparmor_parser -R /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper
 ```
 
+> AppArmor is a mandatory access control system which may block libvirt and KVM from functioning correctly in dynamic cloud environments. Disabling it for relevant services avoids potential runtime errors.
+
 ### Importing cloudstack repositories key
 
 ```
@@ -263,7 +326,6 @@ sudo -i
 mkdir -p /etc/apt/keyrings
 wget -O- http://packages.shapeblue.com/release.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/cloudstack.gpg > /dev/null
 echo deb [signed-by=/etc/apt/keyrings/cloudstack.gpg] http://packages.shapeblue.com/cloudstack/upstream/debian/4.20 / > /etc/apt/sources.list.d/cloudstack.list
-
 ```
 
 ### Configuration to Support Docker Services
