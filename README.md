@@ -45,13 +45,13 @@
   - [Supported Hypervisors](#supported-hypervisors)
   - [Prerequisites](#prerequisites)
   - [Steps to Add a Host](#steps-to-add-a-host)
-- [Launch a Virtual Machine Instance (Ubuntu 20.04)](#launch-a-virtual-machine-instance-ubuntu-2004)
+- [Configure Network Access for the VM](#configure-network-access-for-the-vm)
   - [Upload Ubuntu 20.04 Template](#upload-ubuntu-2004-template)
   - [Launch the VM](#launch-the-vm)
   - [Assign Public IP](#assign-public-ip)
   - [Enable Internet Access](#enable-internet-access)
-  - [Enable SSH Access](#enable-ssh-access)
-  - [Enable HTTP/HTTPS Access](#enable-httphttps-access)
+- [Enable SSH Access](#enable-ssh-access)
+- [Enable HTTP/HTTPS Access](#enable-httphttps-access)
 
 ---
 
@@ -423,9 +423,9 @@ Add details:
 
 ---
 
-### Add Primary and Secondary Storage
+## Add Primary and Secondary Storage
 
-#### Primary Storage
+### Primary Storage
 
 - To stores VM root volumes, data disks, and snapshots.
 - Configured per **Cluster**.
@@ -445,7 +445,7 @@ Add details:
 
 ---
 
-#### Secondary Storage
+### Secondary Storage
 
 - To Stores templates, ISO images, and system VM snapshots.
 - Configured per **Zone**.
@@ -491,7 +491,7 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
 
 ---
 
-## Launch a Virtual Machine Instance (Ubuntu 20.04)
+## Configure Network Access for the VM
 
 ### Upload Ubuntu 20.04 Template
 
@@ -572,8 +572,7 @@ ping 8.8.8.8
 1. SSH into the VM
 Make sure you have SSH into the VM first. (Refer to the previous SSH step.)
 
-## 2. Install Apache
-
+2. Install Apache
 Update package list dan install Apache:
 
 ```bash
@@ -583,7 +582,8 @@ sudo systemctl enable apache2
 sudo systemctl start apache2
 sudo systemctl status apache2
 ```
-### 3. Add Firewall Rules for the Public IP
+
+3. Add Firewall Rules for the Public IP
 
 #### HTTP (Port 80)
 - **Protocol:** TCP  
@@ -600,7 +600,7 @@ sudo systemctl status apache2
 http://192.168.68.126
 ```
 
-### Source of References:
+### References:
 #### [1] L. Reynolds, “Ubuntu Server: Connect to Wi-Fi from command line,” LinuxConfig, Apr. 06, 2020. Available: https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line (accessed May 02, 2025).
 #### [2] BCruz, szovatilevente, “ACPI error after installing Ubuntu 22.04,” Linux.org, Jun. 27, 2022. Available: https://www.linux.org/threads/acpi-error-after-installing-ubuntu-22-04.40993/?__cf_chl_tk=B0f_GmnIzHN8XBzOtLSWePXf3j1vksVK.ekiMOCARt8-1746608196-1.0.1.1-R84f2whyGFqS.2J3VdjeMS1VA8F8jbK_dCJKJzYkS1I (accessed May 02, 2025).
 #### [3] AhmadRifqi86, “cloudstack-install-and-configure/cloudstack-install at main · AhmadRifqi86/cloudstack-install-and-configure,” GitHub, 2024. Available: https://github.com/AhmadRifqi86/cloudstack-install-and-configure/tree/main/cloudstack-install (accessed May 03, 2025).
