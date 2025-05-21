@@ -43,13 +43,23 @@ System IP :
 Public IP :
 ```
 
+### Installing Tools
+
+```
+apt update -y
+apt upgrade -y
+apt install htop lynx duf bridge-utils -y
+```
+
 ## Network Configuration
 
+Netplan was used to define a bridge interface cloudbr0 which connects the physical NIC to virtual interfaces used by VMs.
 ```bash
 cd /etc/netplan
 sudo nano ./0*.yaml
 ```
 
+Edit file to change the IP address:
 ```
 # This is the network config written by 'subiquity'
 network:
@@ -76,6 +86,13 @@ network:
         forward-delay: 0
 ```
 
+Apply the changes:
+
+```bash
+netplan generate
+netplan apply
+```
+
 ## SSH Configuration
 
 ### Allow Root Access via SSH
@@ -88,6 +105,11 @@ service ssh restart
 systemctl restart sshd.service
 ```
 
+### Verify SSH Configuration
+```
+nano /etc/ssh/sshd_config
+```
+
 ## Cloudstack Installation
 
 ### Importing cloudstack repositories key
@@ -97,6 +119,12 @@ sudo -i
 mkdir -p /etc/apt/keyrings 
 wget -O- http://packages.shapeblue.com/release.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/cloudstack.gpg > /dev/null
 echo deb [signed-by=/etc/apt/keyrings/cloudstack.gpg] http://packages.shapeblue.com/cloudstack/upstream/debian/4.18 / > /etc/apt/sources.list.d/cloudstack.list
+```
+
+### Verify repository configruation
+
+```
+nano /etc/apt/sources.list.d/cloudstack.list
 ```
 
 ### Installing Cloudstack Management and Mysql Server
