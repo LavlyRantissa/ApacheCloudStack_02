@@ -56,7 +56,7 @@ apt install htop lynx duf bridge-utils -y
 Netplan was used to define a bridge interface cloudbr0 which connects the physical NIC to virtual interfaces used by VMs.
 ```bash
 cd /etc/netplan
-sudo nano ./0*.yaml
+sudo nano /etc/netplan/01-netcfg.yaml
 ```
 
 Edit file to change the IP address:
@@ -66,7 +66,7 @@ network:
   version: 2
   renderer: networkd
   ethernets:
-    enp0s3:
+    enp1s0:
       dhcp4: false
       dhcp6: false
       optional: true
@@ -78,7 +78,7 @@ network:
           via: 192.168.68.1
       nameservers:
         addresses: [1.1.1.1,8.8.8.8]
-      interfaces: [enp0s3]
+      interfaces: [enp1s0]
       dhcp4: false
       dhcp6: false
       parameters:
@@ -265,3 +265,7 @@ tail -f /var/log/cloudstack/management/management-server.log #if you want to tro
 ```
 http://192.168.68.106:8080
 ```
+
+### You should see the cloudstack dashboard
+
+![image](https://hackmd.io/_uploads/BkBL0BiZgl.png)
