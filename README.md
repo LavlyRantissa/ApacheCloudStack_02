@@ -189,7 +189,7 @@ systemctl status mysql
 ### Initialize CloudStack Schema and User
 
 ```
-cloudstack-setup-databases cloud:cloud@localhost --deploy-as=root:Pa$$w0rd -i 192.168.104.24
+cloudstack-setup-databases cloud:cloud@localhost --deploy-as=root:Pa$$w0rd -i 192.168.68.106
 ```
 
 > This command initializes the CloudStack schema, creates required tables, and provisions a privileged database user that will be used by the management server.
