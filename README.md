@@ -110,6 +110,11 @@ systemctl restart sshd.service
 nano /etc/ssh/sshd_config
 ```
 
+### Set Timezone
+```
+timedatectl set-timezone Asia/Jakarta
+```
+
 ## Cloudstack Installation
 
 ### Importing cloudstack repositories key
@@ -251,6 +256,28 @@ apparmor_parser -R /etc/apparmor.d/usr.sbin.libvirtd
 apparmor_parser -R /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper
 ```
 
+### Importing cloudstack repositories key
+
+```
+sudo -i
+mkdir -p /etc/apt/keyrings
+wget -O- http://packages.shapeblue.com/release.asc | gpg --dearmor | sudo tee /etc/apt/keyrings/cloudstack.gpg > /dev/null
+echo deb [signed-by=/etc/apt/keyrings/cloudstack.gpg] http://packages.shapeblue.com/cloudstack/upstream/debian/4.20 / > /etc/apt/sources.list.d/cloudstack.list
+
+```
+
+### Configuration to Support Docker Services
+```
+#on certain hosts where you may be running docker and other services, 
+#you may need to add the following in /etc/sysctl.conf
+#and then run sysctl -p: --> /etc/sysctl.conf
+
+echo "net.bridge.bridge-nf-call-arptables = 0" >> /etc/sysctl.conf
+echo "net.bridge.bridge-nf-call-iptables = 0" >> /etc/sysctl.conf
+sysctl -p
+```
+
+
 ### Launch Cloudstack Management Server
 
 ```
@@ -269,4 +296,3 @@ http://192.168.68.106:8080
 ### You should see the cloudstack dashboard
 
 ![image](https://github.com/user-attachments/assets/1fc841f5-dcb3-4e2a-b8b0-1881cf7372fc)
-
