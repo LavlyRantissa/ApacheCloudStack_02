@@ -304,3 +304,55 @@ Login Credentials (Default)
 - Password: password
 *Recommended to change the default password for security
 ```
+
+### Add a Zone, Pod, and Cluster
+
+Once logged in to the CloudStack Dashboard:
+
+1. Go to `Infrastructure` > `Zones` > `Add Zone`
+2. Choose `Advanced` or `Basic Networking`, depends on network setup
+3. Follow the guided wizard to complete the setup:
+
+---
+
+#### Zone
+
+- A **Zone** represents a single physical data center.
+- It includes:
+  - One or more **Pods**
+  - Shared **Secondary Storage** (for templates, ISOs, and snapshots)
+- Add details:
+  - Zone name (e.g. KELOMPOK2_ZONE)
+  - Public and guest IP address ranges, with subnets
+  - DNS servers (internal and external)
+  - Network type (Basic or Advanced)
+
+---
+
+#### Pod
+
+- A **Pod** resides within a zone and typically represents a single rack or switch.
+- Each Pod includes:
+  - One or more **Clusters**
+  - Its own subnet (Layer 2 broadcast domain)
+  - Access to **Primary Storage**
+- Add details:
+  - Pod name
+  - IP address range
+  - Netmask
+  - Gateway
+
+---
+
+#### Cluster
+
+- A **Cluster** is a group of hosts (physical servers) that use the same hypervisor (e.g., KVM, XenServer, or VMware).
+- Clusters are where your virtual machines (VMs) will be deployed.
+- Each cluster shares:
+  - **Primary Storage**
+  - Network configurations
+- Add details:
+  - Cluster name (e.g. KELOMPOK2_CLUSTER)
+  - Hypervisor type (e.g., KVM, XenServer, or VMware)
+  - Add physical hosts (including credentials and IPs)
+
