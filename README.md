@@ -1,5 +1,7 @@
 # Apache CloudStack Installataion on Ubuntu
 
+![image](https://github.com/user-attachments/assets/88adbe5d-7899-4af6-91f6-efe3db9dc1a6)
+
 ## Contributors
 
 * Fayza Nirwasita (2106635700)
