@@ -589,7 +589,7 @@ sudo ufw allow 443
 sudo ufw reload
 ```
 
-Jika belum punyai domain (opsional)
+If you haven't registered a domain (optional)
 ```
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
 -keyout /etc/ssl/private/apache-selfsigned.key \
