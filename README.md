@@ -582,6 +582,16 @@ sudo apt install apache2 -y
 sudo systemctl enable apache2
 sudo systemctl start apache2
 sudo systemctl status apache2
+sudo ufw allow 80
+sudo ufw allow 443
+sudo ufw reload
+```
+
+Jika belum punyai domain (opsional)
+```
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+-keyout /etc/ssl/private/apache-selfsigned.key \
+-out /etc/ssl/certs/apache-selfsigned.crt
 ```
 
 3. Add Firewall Rules for the Public IP
@@ -600,6 +610,16 @@ sudo systemctl status apache2
 ```
 http://192.168.68.126
 ```
+
+#### For HTTPS (with Tailscale)
+
+```
+sudo tailscale funnel 80
+```
+
+Head to `https://cybersec.taila5ed6f.ts.net/` (You can find it in your Tailscale machine address)
+
+![image](https://github.com/user-attachments/assets/e898c9d8-5713-4ba0-895e-4ad118950aba)
 
 ---
 
