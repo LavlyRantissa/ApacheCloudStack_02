@@ -495,7 +495,7 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
 
 ### Upload Ubuntu 20.04 Template
 
-1. Navigate to `Templates` > `Register Template`
+1. Navigate to `Iso` > `Register Iso`
 2. Use the following settings:
    - **Name**: `Ubuntu-20.04`
    - **URL**:  
@@ -503,10 +503,8 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
      https://releases.ubuntu.com/focal/ubuntu-20.04.6-live-server-amd64.iso
      ```
    - **OS Type**: Ubuntu (64-bit)
-   - **Hypervisor**: KVM
-   - **Format**: QCOW2
    - **Zone**: `KELOMPOK2-ZONE`
-   - **Public**: ✅
+   - **Bootable**: ✅
 3. Click **OK** and wait until the status shows `Ready`
 
 ### Launch the VM
@@ -514,11 +512,13 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
 1. Go to `Instances` > `Add Instance`
 2. Follow the wizard:
    - **Zone**: `KELOMPOK2-ZONE`
-   - **Template**: `Ubuntu-20.04`
+   - **Pod**: `KELOMPOK2-ZONE`
+   - **Cluster**: `KELOMPOK2-ZONE`
+   - **Host**: `KELOMPOK2-ZONE`
+   - **Iso**: `Ubuntu-20.04`
    - **Compute Offering**: Medium Instance (1 vCPU, 1GB RAM)
-   - **Disk Offering**: Use default
+   - **Disk Offering**: Use Large
    - **Network**: `KELOMPOK2-NETWORK` (Isolated with Source NAT)
-   - **Name**: e.g., `ubuntu-web01`
 3. Click **Launch VM**
 
 **Example:**
@@ -535,7 +535,7 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
 
 ### Enable Internet Access
 
-1. Go to `Network` > `KELOMPOK2-NETWORK` > `Egress Rules`
+1. Go to `Network` > `Guest Network` > `KELOMPOK2-NETWORK` > `Egress Rules`
 2. Add the following rule:
    - **Protocol**: All  
    - **CIDR**: `0.0.0.0/0`  
