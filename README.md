@@ -512,9 +512,9 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
 1. Go to `Instances` > `Add Instance`
 2. Follow the wizard:
    - **Zone**: `KELOMPOK2-ZONE`
-   - **Pod**: `KELOMPOK2-ZONE`
-   - **Cluster**: `KELOMPOK2-ZONE`
-   - **Host**: `KELOMPOK2-ZONE`
+   - **Pod**: `KELOMPOK2-POD`
+   - **Cluster**: `KELOMPOK2-CLUSTER`
+   - **Host**: `cybersec`
    - **Iso**: `Ubuntu-20.04`
    - **Compute Offering**: Medium Instance (1 vCPU, 1GB RAM)
    - **Disk Offering**: Use Large
