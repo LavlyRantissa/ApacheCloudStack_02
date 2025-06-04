@@ -556,8 +556,6 @@ ping 8.8.8.8
 1. **Go to the Firewall tab** under IP `192.168.68.126` (in `Network` section under `Public IP addresses`).
 2. **Add a Port Forwarding Rule**:
    - **Protocol**: TCP  
-   - **Public Port**: 22  
-   - **Private Port**: 22  
    - **VM**: `ubuntu-web01` (`10.1.1.226`)
   
 ![image](https://github.com/user-attachments/assets/c29df4c5-b6c1-4c14-ae6b-475c59be10ce)
