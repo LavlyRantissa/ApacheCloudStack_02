@@ -497,7 +497,7 @@ Hypervisors (physical servers) are where your virtual machines will run. Hosts m
 
 1. Navigate to `Iso` > `Register Iso`
 2. Use the following settings:
-   - **Name**: `Ubuntu-20.04`
+   - **Name**: `Ubuntu 20.04.6 LTS`
    - **URL**:  
      ```
      https://releases.ubuntu.com/focal/ubuntu-20.04.6-live-server-amd64.iso
