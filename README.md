@@ -1,6 +1,6 @@
 # Apache CloudStack Installataion on Ubuntu
 
-![image](https://github.com/user-attachments/assets/88adbe5d-7899-4af6-91f6-efe3db9dc1a6)
+![image](https://github.com/user-attachments/assets/3770d835-7ffd-4a27-a90f-47f50a3fbe6e)
 
 ## Contributors
 
@@ -58,11 +58,25 @@
 ---
 
 ## Introduction
-Apache CloudStack is an open-source Infrastructure-as-a-Service (IaaS) cloud computing platform designed to deploy and manage large networks of virtual machines. It abstracts physical infrastructure resources such as compute, storage, and networking, and enables cloud administrators to provision and orchestrate them via APIs or a web-based interface.
 
-CloudStack supports multiple hypervisors including KVM, VMware, and XenServer, and enables configuration of virtualized datacenters using logical constructs such as Zones, Pods, Clusters, and Hosts. It includes features like virtual machine templates, elastic IP management, system-wide resource monitoring, and multi-tenant user management. In this guide, we use KVM as the hypervisor and NFS as shared storage for primary and secondary storage.
+Apache CloudStack is an open-source cloud orchestration platform designed for deploying and managing large-scale Infrastructure-as-a-Service (IaaS) environments. It provides a centralized control layer to abstract, pool, and provision physical infrastructure resources such as compute nodes (hypervisors), primary and secondary storage systems, and networking components.
 
-This single-node deployment includes the CloudStack Management Server, KVM compute node, and both primary and secondary storage services running on the same host.
+CloudStack automates the setup and operation of cloud infrastructure by exposing a robust API layer and an intuitive web UI. It supports multi-tenant environments, role-based access control, elastic IPs, service offerings, network isolation, and autoscaling.
+
+In this deployment, we are installing **CloudStack version 4.18** on a single Ubuntu 20.04 machine. All key services—including the Management Server, KVM Hypervisor, NFS server, and system VMs—are hosted on the same physical machine. While this setup is not intended for production, it serves as a complete and realistic testbed for learning and demonstration purposes.
+
+### Key Components:
+- **Management Server**: The central controller responsible for provisioning resources, managing user access, scheduling VM deployments, and exposing API/UI.
+- **KVM Hypervisor**: A native (bare-metal) hypervisor supported directly by the Linux kernel, used to run virtual machines.
+- **libvirt**: A virtualization API and toolset that provides unified management of KVM hosts and VMs.
+- **NFS Storage**:
+  - **Primary Storage**: Stores VM volumes (root disks, data disks).
+  - **Secondary Storage**: Stores VM templates, ISO images, and snapshots.
+- **Logical Topology**:
+  - **Zone**: Represents a physical datacenter.
+  - **Pod**: Represents a rack or Layer 2 domain.
+  - **Cluster**: Contains hypervisor hosts and shared primary storage.
+  - **Host**: A physical server running the hypervisor.
 
 ---
 
