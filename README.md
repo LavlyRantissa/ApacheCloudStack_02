@@ -1,4 +1,4 @@
-# Apache CloudStack Installataion on Ubuntu
+# Apache CloudStack Installation on Ubuntu
 
 ![image](https://github.com/user-attachments/assets/3770d835-7ffd-4a27-a90f-47f50a3fbe6e)
 
