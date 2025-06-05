@@ -63,7 +63,7 @@ Apache CloudStack is an open-source cloud orchestration platform designed for de
 
 CloudStack automates the setup and operation of cloud infrastructure by exposing a robust API layer and an intuitive web UI. It supports multi-tenant environments, role-based access control, elastic IPs, service offerings, network isolation, and autoscaling.
 
-In this deployment, we are installing **CloudStack version 4.18** on a single Ubuntu 20.04 machine. All key services—including the Management Server, KVM Hypervisor, NFS server, and system VMs—are hosted on the same physical machine. While this setup is not intended for production, it serves as a complete and realistic testbed for learning and demonstration purposes.
+In this deployment, we are installing **CloudStack version 4.20** on a single Ubuntu 20.04 machine. All key services—including the Management Server, KVM Hypervisor, NFS server, and system VMs—are hosted on the same physical machine. While this setup is not intended for production, it serves as a complete and realistic testbed for learning and demonstration purposes.
 
 ### Key Components:
 - **Management Server**: The central controller responsible for provisioning resources, managing user access, scheduling VM deployments, and exposing API/UI.
