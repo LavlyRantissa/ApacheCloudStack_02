@@ -637,6 +637,11 @@ Head to `https://cybersec.taila5ed6f.ts.net/` (You can find it in your Tailscale
 
 ---
 
+# Video Demonstration 
+
+[![Video Demo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTneVPTEyPfLoBM8UxLQ83odFYKdQ5xKqv08g&s)](https://www.youtube.com/watch?v=4zh1t5FrKug&t)
+
+
 ### References:
 #### [1] L. Reynolds, “Ubuntu Server: Connect to Wi-Fi from command line,” LinuxConfig, Apr. 06, 2020. Available: https://linuxconfig.org/ubuntu-20-04-connect-to-wifi-from-command-line (accessed May 02, 2025).
 #### [2] BCruz, szovatilevente, “ACPI error after installing Ubuntu 22.04,” Linux.org, Jun. 27, 2022. Available: https://www.linux.org/threads/acpi-error-after-installing-ubuntu-22-04.40993/?__cf_chl_tk=B0f_GmnIzHN8XBzOtLSWePXf3j1vksVK.ekiMOCARt8-1746608196-1.0.1.1-R84f2whyGFqS.2J3VdjeMS1VA8F8jbK_dCJKJzYkS1I (accessed May 02, 2025).
